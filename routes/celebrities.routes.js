@@ -2,10 +2,15 @@
 const router = require('express').Router()
 const Celebrity = require('../models/Celebrity.model')
 
-//Get celebrities
+//Get celebrities and render the view
 
-router.get('/', (req, res, next) => {
-    res.render('celebrities/celebrities')
+router.get('/', async (req, res, next) => {
+    try {
+        const allCelebrities = await Celebrity.find()
+        res.render('celebrities/celebrities', { allCelebrities })
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 //Render the view for creating a celebrity
